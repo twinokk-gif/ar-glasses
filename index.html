@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>AR Примерка Очков</title>
-  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <!-- MindAR для face-tracking -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/aframe/mindar-face-aframe.prod.js"></script>
   <style>
     body { margin: 0; overflow: hidden; font-family: sans-serif; }
@@ -25,7 +23,6 @@
 </head>
 <body>
 
-<!-- Кнопки для смены очков -->
 <div class="buttons">
   <button onclick="showGlasses('glasses1')">Очки 1</button>
   <button onclick="showGlasses('glasses2')">Очки 2</button>
@@ -33,8 +30,7 @@
   <button onclick="showGlasses('glasses4')">Очки 4</button>
 </div>
 
-<!-- Сцена AR -->
-<a-scene mindar-face="autoStart: true;" vr-mode-ui="enabled: false" embedded>
+<a-scene mindar-face="autoStart: false; maxTrack: 1;" vr-mode-ui="enabled: false" embedded>
   <a-camera position="0 0 0"></a-camera>
 
   <!-- Очки 1 -->
@@ -58,8 +54,15 @@
             scale="0.05 0.05 0.05" position="0 0 0.05" visible="false"></a-entity>
 </a-scene>
 
-<!-- Скрипт для переключения очков -->
 <script>
+  const scene = document.querySelector('a-scene');
+
+  // Ждём клика по экрану, чтобы разрешить камеру
+  document.body.addEventListener('click', () => {
+    const mindarComponent = scene.components['mindar-face'];
+    if (mindarComponent) mindarComponent.start();
+  }, { once: true });
+
   function showGlasses(id) {
     const glasses = ['glasses1','glasses2','glasses3','glasses4'];
     glasses.forEach(g => {
@@ -67,6 +70,10 @@
     });
   }
 </script>
+
+<p style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);color:red;font-size:18px;">
+Нажмите на экран, чтобы запустить камеру
+</p>
 
 </body>
 </html>
