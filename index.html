@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AR Примерка Очков</title>
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <!-- MindAR для face-tracking -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/aframe/mindar-face-aframe.prod.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: sans-serif; }
+    .buttons {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
+    }
+    .buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Кнопки для смены очков -->
+<div class="buttons">
+  <button onclick="showGlasses('glasses1')">Очки 1</button>
+  <button onclick="showGlasses('glasses2')">Очки 2</button>
+  <button onclick="showGlasses('glasses3')">Очки 3</button>
+  <button onclick="showGlasses('glasses4')">Очки 4</button>
+</div>
+
+<!-- Сцена AR -->
+<a-scene mindar-face="autoStart: true;" vr-mode-ui="enabled: false" embedded>
+  <a-camera position="0 0 0"></a-camera>
+
+  <!-- Очки 1 -->
+  <a-entity id="glasses1" mindar-face-target="anchorIndex: 0" 
+            gltf-model="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/Box/glTF/Box.gltf" 
+            scale="0.05 0.05 0.05" position="0 0 0.05" visible="true"></a-entity>
+
+  <!-- Очки 2 -->
+  <a-entity id="glasses2" mindar-face-target="anchorIndex: 0" 
+            gltf-model="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/Cube/glTF/Cube.gltf" 
+            scale="0.05 0.05 0.05" position="0 0 0.05" visible="false"></a-entity>
+
+  <!-- Очки 3 -->
+  <a-entity id="glasses3" mindar-face-target="anchorIndex: 0" 
+            gltf-model="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/Cylinder/glTF/Cylinder.gltf" 
+            scale="0.05 0.05 0.05" position="0 0 0.05" visible="false"></a-entity>
+
+  <!-- Очки 4 -->
+  <a-entity id="glasses4" mindar-face-target="anchorIndex: 0" 
+            gltf-model="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models/2.0/Sphere/glTF/Sphere.gltf" 
+            scale="0.05 0.05 0.05" position="0 0 0.05" visible="false"></a-entity>
+</a-scene>
+
+<!-- Скрипт для переключения очков -->
+<script>
+  function showGlasses(id) {
+    const glasses = ['glasses1','glasses2','glasses3','glasses4'];
+    glasses.forEach(g => {
+      document.getElementById(g).setAttribute('visible', g === id);
+    });
+  }
+</script>
+
+</body>
+</html>
